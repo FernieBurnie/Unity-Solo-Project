@@ -5,10 +5,12 @@ public class PlayerController : MonoBehaviour
 {
     public float speed = 5.0f;
     public float jumpHeight = 10f;
+    public float jumpboost = 5f;
     public float jumpDetectDistance = 1.1f;
 
     PlayerInput playerInput;
     Rigidbody2D rb;
+    public GameObject currentEquipment;
 
     Ray2D footJumpRay;
     Ray2D wallLJumpRay;
@@ -21,6 +23,8 @@ public class PlayerController : MonoBehaviour
         // Initalizing component data
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
+
+        currentEquipment = null;
 
         //Setting up new move Vector
         moveInput = Vector2.zero;
@@ -54,7 +58,28 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        if (Physics2D.Raycast(footJumpRay.origin, footJumpRay.direction, jumpDetectDistance) || (Physics2D.Raycast(wallRJumpRay.origin,wallRJumpRay.direction, jumpDetectDistance) || Physics2D.Raycast(wallLJumpRay.origin, wallLJumpRay.direction, jumpDetectDistance)))
+        if (Physics2D.Raycast(footJumpRay.origin, footJumpRay.direction, jumpDetectDistance) || (Physics2D.Raycast(wallRJumpRay.origin, wallRJumpRay.direction, jumpDetectDistance) || Physics2D.Raycast(wallLJumpRay.origin, wallLJumpRay.direction, jumpDetectDistance)))
             rb.AddForceY(jumpHeight, ForceMode2D.Impulse);
+    }
+
+    public void ActivateEquipment()
+    {
+        if (currentEquipment != null)
+        {
+
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag == "Equipment")
+        {
+            currentEquipment = collision.gameObject;
+            collision.gameObject.SetActive(false);
+
+            jumpHeight += jumpboost;
+
+        }
+
     }
 }
