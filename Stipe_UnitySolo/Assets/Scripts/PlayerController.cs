@@ -1,12 +1,22 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
+    public bool hazardDamage = false;
+    public bool poisoned = false;
+    public bool poisonDmg = false;
+
     public float speed = 5.0f;
+    public int health = 5;
     public float jumpHeight = 10f;
     public float jumpboost = 3f;
     public float jumpDetectDistance = 1.1f;
+    public float hazardCooldown = 3f;
+    public float poisonDuration = 4;
+    public float poisonInterval = 1;
 
     PlayerInput playerInput;
     Rigidbody2D rb;
@@ -37,10 +47,20 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        footJumpRay.origin = transform.position;
+        // Die
+        if (health <= 0)
+        { }
+
+        if(poisoned)
+        {
+            if (!poisonDmg)
+                StartCoroutine("poisonEffect");
+        }
+            
         wallRJumpRay.origin = transform.position;
         wallLJumpRay.origin = transform.position;
-
+        footJumpRay.origin = transform.position;
+        
         footJumpRay.direction = -transform.up;
         wallRJumpRay.direction = transform.right;
         wallLJumpRay.direction = -transform.right;
@@ -80,6 +100,68 @@ public class PlayerController : MonoBehaviour
             jumpHeight += jumpboost;
 
         }
+    }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Hazard")
+        {
+            health--;
+        }
+
+        if (collision.gameObject.tag == "Poison")
+        {
+            poisoned = true;
+            StartCoroutine("poisonCooldown");
+        }
+    }
+
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Hazard")
+        {
+            if (!hazardDamage)
+                StartCoroutine("damageCooldown");
+        }
+    }
+
+    public void OnCollisionExit2D(Collision2D collison)
+    {
+        if(collison.gameObject.tag == "Hazard")
+        {
+            if (hazardDamage)
+            {
+                StopCoroutine("damageCooldown");
+                hazardDamage = false;
+            }
+        }
+    }
+
+    IEnumerator damageCooldown()
+    {
+        hazardDamage = true;
+
+        yield return new WaitForSeconds(hazardCooldown);
+
+        health--;
+        hazardDamage = false;
+    }
+
+    IEnumerator poisonEffect()
+    {
+        poisonDmg = true;
+
+        yield return new WaitForSeconds(poisonInterval);
+
+        health--;
+        poisonDmg = false;
+    }
+
+    IEnumerator poisonCooldown()
+    {
+        yield return new WaitForSeconds(poisonDuration);
+
+        poisoned = false;
     }
 }
