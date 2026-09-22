@@ -11,8 +11,10 @@ public class PlayerController : MonoBehaviour
 
     public float speed = 5.0f;
     public int health = 5;
-    public float jumpHeight = 10f;
-    public float jumpboost = 3f;
+    public float maxHealth = 5;
+
+    public float jumpHeight = 5f;
+    public float jumpboost = 2f;
     public float jumpDetectDistance = 1.1f;
     public float hazardCooldown = 3f;
     public float poisonDuration = 4;
@@ -107,6 +109,11 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Hazard")
         {
             health--;
+        }
+
+        if (collision.gameObject.tag == "Health")
+        {
+            health++;
         }
 
         if (collision.gameObject.tag == "Poison")
