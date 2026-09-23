@@ -13,7 +13,7 @@ public class PlayerController : MonoBehaviour
     public int health = 5;
     public float maxHealth = 5;
 
-    public float jumpHeight = 5f;
+    public float jumpHeight = 4f;
     public float jumpboost = 2f;
     public float jumpDetectDistance = 1.1f;
     public float hazardCooldown = 3f;
