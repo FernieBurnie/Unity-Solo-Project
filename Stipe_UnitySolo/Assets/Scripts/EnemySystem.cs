@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -10,10 +11,6 @@ public class Enemy : MonoBehaviour
     public float speed = 3.5f;
     public float detectionDistance = 2;
     public float stoppingDistance = 1;
-
-    //Delete later?
-    public bool EnemyDamage = false;
-    //
 
     public PlayerController player;
     public Rigidbody2D rb;
@@ -46,6 +43,4 @@ public class Enemy : MonoBehaviour
         else
             rb.linearVelocityX = 0;
     }
-
-    private void 
 }

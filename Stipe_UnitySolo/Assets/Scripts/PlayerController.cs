@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
     public float hazardCooldown = 3f;
     public float poisonDuration = 4;
     public float poisonInterval = 1;
+    //Delete later if it doesn't work, testing enemy system
+    public float damageTimer = 0f;
+    public float enemyCooldown = 1f;
+    public int enemyDamage = 1;
 
     PlayerInput playerInput;
     Rigidbody2D rb;
@@ -71,6 +75,12 @@ public class PlayerController : MonoBehaviour
         tempMove.x = moveInput.x * speed;
 
         rb.linearVelocity = tempMove;
+//delete later if it doesn't work, testing enemy system
+
+        if (damageTimer>0)
+        {
+            damageTimer -= Time.deltaTime;
+        }
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -121,6 +131,11 @@ public class PlayerController : MonoBehaviour
             poisoned = true;
             StartCoroutine("poisonCooldown");
         }
+//delete later if it doesn't work, testing enemy system
+        if (collision.gameObject.tag == "Enemy")
+        {
+            health--;
+        }
     }
 
 
@@ -131,6 +146,15 @@ public class PlayerController : MonoBehaviour
             if (!hazardDamage)
                 StartCoroutine("damageCooldown");
         }
+//delete later if it doesn't work, testing enemy system
+        if (collision.gameObject.tag == "Enemy")
+        {
+            if (damageTimer <= 0)
+            {
+                health -= enemyDamage;
+                damageTimer = enemyCooldown;
+            }
+        }    
     }
 
     public void OnCollisionExit2D(Collision2D collison)
