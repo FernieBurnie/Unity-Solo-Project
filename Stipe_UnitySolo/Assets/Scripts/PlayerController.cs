@@ -10,8 +10,8 @@ public class PlayerController : MonoBehaviour
     public bool poisonDmg = false;
 
     public float speed = 5.0f;
-    public int health = 5;
-    public float maxHealth = 5;
+    public int health = 6;
+    public float maxHealth = 6;
 
     public float jumpHeight = 4f;
     public float jumpboost = 2f;
