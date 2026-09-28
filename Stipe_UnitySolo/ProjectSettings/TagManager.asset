@@ -9,6 +9,7 @@ TagManager:
   - Poison
   - Health
   - Enemy
+  - Wall
   layers:
   - Default
   - TransparentFX
