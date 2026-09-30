@@ -6483,9 +6483,21 @@ MonoBehaviour:
   hazardDamage: 0
   poisoned: 0
   poisonDmg: 0
+  sprinting: 0
   speed: 5
   health: 6
   maxHealth: 6
+  stamina: 100
+  maxStamina: 100
+  sprintBoost: 2
+  sprintCooldown: 2
+  staminaRegen: 5
+  staminaCooldown: 2
+  sprintCost: 25
+  canSprint: 1
+  regenStamina: 0
+  sprintStop: 0
+  staminaStop: 0
   jumpHeight: 4
   jumpboost: 5
   jumpDetectDistance: 1.2
@@ -6493,6 +6505,7 @@ MonoBehaviour:
   poisonDuration: 4
   poisonInterval: 1
   damageTimer: 0
+  toggleSprint: 1
   enemyCooldown: 1
   enemyDamage: 1
   currentEquipment: {fileID: 0}

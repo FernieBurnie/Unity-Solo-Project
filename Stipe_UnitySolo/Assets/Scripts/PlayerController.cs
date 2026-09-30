@@ -1,17 +1,29 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering;
 
 public class PlayerController : MonoBehaviour
 {
     public bool hazardDamage = false;
     public bool poisoned = false;
     public bool poisonDmg = false;
+    public bool sprinting = false;
 
     public float speed = 5.0f;
     public int health = 6;
     public float maxHealth = 6;
+
+    public float stamina = 100f;
+    public float maxStamina = 100f;
+    public float sprintBoost = 2.0f;
+    public float sprintCooldown = 2;
+    public float staminaRegen = 5;
+    public float staminaCooldown = 2;
+    public float sprintCost = .1f;
+    public bool canSprint = true;
+    public bool regenStamina = false;
+    public bool sprintStop = false;
+    public bool staminaStop = false;
 
     public float jumpHeight = 4f;
     public float jumpboost = 2f;
@@ -20,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public float poisonDuration = 4;
     public float poisonInterval = 1;
     public float damageTimer = 0f;
+    public bool toggleSprint = true;
     
     public float enemyCooldown = 1f;
     public int enemyDamage = 1;
@@ -74,6 +87,48 @@ public class PlayerController : MonoBehaviour
 
         tempMove.x = moveInput.x * speed;
 
+        if (sprinting)
+        {
+            if ((moveInput.x == 1 || moveInput.x == -1) && stamina > 0)
+            {
+                tempMove.x *= sprintBoost;
+
+                stamina -= sprintCost * Time.deltaTime;
+
+                if (stamina < 0)
+                    stamina = 0;
+
+                StopCoroutine("staminaReset");
+            }
+            else
+            {
+                canSprint = false;
+                sprinting = false;
+            }
+        }
+
+        if (!sprinting)
+        {
+            if (!regenStamina && !staminaStop && stamina < maxStamina)
+            {
+                StartCoroutine("staminaReset");
+            }
+            if (!canSprint && !sprintStop)
+            {
+                StartCoroutine("sprintReset");
+            }
+            if (regenStamina)
+            {
+                stamina += staminaRegen * Time.deltaTime;
+
+                if (stamina >= maxStamina)
+                {
+                    stamina = maxStamina;
+                    regenStamina = false;
+                }
+            }
+        }
+
         rb.linearVelocity = tempMove;
 
         if (damageTimer>0)
@@ -110,6 +165,24 @@ public class PlayerController : MonoBehaviour
 
             jumpHeight += jumpboost;
 
+        }
+    }
+
+    public void Sprint(InputAction.CallbackContext context)
+    {
+        if (canSprint)
+        {
+            if (toggleSprint)
+            {
+                sprinting = !sprinting;
+            }
+            else if (!toggleSprint)
+            {
+                sprinting = context.ReadValueAsButton();
+
+                if (!sprinting)
+                    canSprint = false;
+            }
         }
     }
 
@@ -193,5 +266,25 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(poisonDuration);
 
         poisoned = false;
+    }
+
+    IEnumerator sprintReset()
+    {
+        sprintStop = true;
+
+        yield return new WaitForSeconds(sprintCooldown);
+
+        canSprint = true;
+        sprintStop = false;
+    }
+
+    IEnumerator staminaReset()
+    {
+        staminaStop = true;
+
+        yield return new WaitForSeconds(staminaCooldown);
+
+        regenStamina = true;
+        staminaStop = false;
     }
 }
