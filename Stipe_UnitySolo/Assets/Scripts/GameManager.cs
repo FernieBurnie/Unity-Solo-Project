@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(int levelID)
     {
-        if(levelID >= SceneManager.sceneCount)
+        if(levelID >= SceneManager.sceneCountInBuildSettings)
             Debug.Log("Scene ID too high: " + levelID);
         else
             SceneManager.LoadScene(levelID);
