@@ -5495,7 +5495,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.36027047, g: 0.5185238, b: 0.55345905, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -5627,11 +5627,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7170301679689907791, guid: 0e3bd1badac81e3469724e3c05d9f970, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -34.33
+      value: -27.9
       objectReference: {fileID: 0}
     - target: {fileID: 7170301679689907791, guid: 0e3bd1badac81e3469724e3c05d9f970, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.06
+      value: -14.92
       objectReference: {fileID: 0}
     - target: {fileID: 7170301679689907791, guid: 0e3bd1badac81e3469724e3c05d9f970, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5664,6 +5664,18 @@ PrefabInstance:
     - target: {fileID: 7170301679689907791, guid: 0e3bd1badac81e3469724e3c05d9f970, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128802997732685567, guid: 0e3bd1badac81e3469724e3c05d9f970, type: 3}
+      propertyPath: m_Color.b
+      value: 0.65434015
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128802997732685567, guid: 0e3bd1badac81e3469724e3c05d9f970, type: 3}
+      propertyPath: m_Color.g
+      value: 0.8679245
+      objectReference: {fileID: 0}
+    - target: {fileID: 8128802997732685567, guid: 0e3bd1badac81e3469724e3c05d9f970, type: 3}
+      propertyPath: m_Color.r
+      value: 0.5977215
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5844,7 +5856,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.36078432, g: 0.52156866, b: 0.5529412, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

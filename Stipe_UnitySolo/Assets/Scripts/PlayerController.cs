@@ -27,8 +27,10 @@ public class PlayerController : MonoBehaviour
     public bool staminaStop = false;
 
     public float jumpHeight = 4f;
-    public float jumpboost = 2f;
+    public float jumpBoost = 2f;
     public float jumpDetectDistance = 1.1f;
+    public bool jumpBoostActivated = false;
+
     public float hazardCooldown = 3f;
     public float poisonDuration = 4;
     public float poisonInterval = 1;
@@ -69,7 +71,9 @@ public class PlayerController : MonoBehaviour
     {
         // Die
         if (health <= 0)
-        { }
+        {
+
+        }
 
         if(poisoned)
         {
@@ -153,7 +157,14 @@ public class PlayerController : MonoBehaviour
     {
         if (currentEquipment != null)
         {
+            if (currentEquipment.name == "Jump")
+            {
+                jumpHeight += jumpBoost;
 
+                jumpBoostActivated = true;
+
+                currentEquipment = null;
+            }
         }
     }
 
@@ -164,7 +175,7 @@ public class PlayerController : MonoBehaviour
             currentEquipment = collision.gameObject;
             collision.gameObject.SetActive(false);
 
-            jumpHeight += jumpboost;
+            jumpHeight += jumpBoost;
 
         }
     }
