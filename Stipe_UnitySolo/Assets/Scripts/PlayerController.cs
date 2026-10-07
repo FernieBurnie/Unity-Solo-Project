@@ -207,7 +207,14 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "Health")
         {
-            health++;
+            if (health >= maxHealth)
+            {
+                return;
+            }
+            else
+            {
+                health++;
+            }
         }
 
         if (collision.gameObject.tag == "Poison")
@@ -243,7 +250,7 @@ public class PlayerController : MonoBehaviour
                 health -= enemyDamage;
                 damageTimer = enemyCooldown;
             }
-        }    
+        } 
     }
 
     public void OnCollisionExit2D(Collision2D collison)
