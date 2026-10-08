@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -36,7 +37,11 @@ public class PlayerController : MonoBehaviour
     public float poisonInterval = 1;
     public float damageTimer = 0f;
     public bool toggleSprint = true;
-    
+
+    //delete later if it doesn't work, testing dialogue system
+    public float talkDistance = 2f;
+    bool inConversation;
+
     public float enemyCooldown = 1f;
     public int enemyDamage = 1;
 
@@ -140,6 +145,52 @@ public class PlayerController : MonoBehaviour
         {
             damageTimer -= Time.deltaTime;
         }
+
+        //delete later if it doesn't work, testing dialogue systems
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            Interact();
+        }
+    }
+
+    public void Interact()
+    {
+        if (inConversation)
+        {
+            DialogueBoxController.instance.SkipLine();
+        }
+        else
+        {
+            if (Physics.Raycast(new Ray(transform.position, transform.forward), out RaycastHit hitInfo, talkDistance))
+            {
+                if (hitInfo.collider.gameObject.TryGetComponent(out NPC npc))
+                {
+                    DialogueBoxController.instance.StartDialogue(npc.dialogueAsset.dialogue, npc.StartPosition, npc.npcName);
+                }    
+            }
+        }
+    }
+
+    void JoinConversation()
+    {
+        inConversation = true;
+    }
+
+    void LeaveConversation()
+    {
+        inConversation = false;
+    }
+
+    private void OnEnable()
+    {
+        DialogueBoxController.OnDialogueStarted += JoinConversation;
+        DialogueBoxController.OnDisalogueEnded += LeaveConversation;
+    }
+
+    private void OnDisable()
+    {
+        DialogueBoxController.OnDialogueStart -= JoinConversation;
+        DialogueBoxController.OnDialogueEnded -= LeaveConversation;
     }
 
     public void Move(InputAction.CallbackContext context)
@@ -230,7 +281,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "LevelEnd")
         {
-            GameObject.Find("GameManager").GetComponent<GameManager>().LoadLevel(SceneManager.GetActiveScene().buildIndex + 1);
+            GameObject.Find("GameManager").GetComponent<GameManager>().LoadNextLevel();
         }
     }
 
