@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager : MonoBehaviour
 {
@@ -15,44 +16,13 @@ public class GameManager : MonoBehaviour
 
     public TextMeshProUGUI BoostActivationText;
 
-    //delete later if it doesn't work, testing dialogue systems, or i can make a new script, see if that works instead
-    TextMeshProUGUI dialogueText;
-    [SerializeField] TextMeshProUGUI nameText;
-    [SerializeField] CanvasGroup dialogueBox;
-
-    public static event Action OnDialogueStarted;
-    public static event Action OnDialogueEnded;
-    bool skipLineTriggered;
-
-    public class DialogueTree : ScriptableObject
-    {
-        public DialogueSection[] sections;
-    }
-    [System.Serializable]
-    public struct DialogueSection
-    {
-        [TextArea]
-        public string[] dialogue;
-        public bool endAfterDialogue;
-        public BranchPoint branchPoint;
-    }
-    [System.Serializable]
-    public struct BranchPoint
-    {
-        [TextArea]
-        public string question;
-        public Answer[] answers;
-    }
-    [System.Serializable]
-    public struct Answer
-    {
-        public string answerLabel;
-        public int nextElement;
-    }
-    //delete everything above if needed.
-
     public Image healthBar;
     public Image staminaBar;
+    //delete later if it doesn't work, testing dialogue system / npc
+
+    [SerializeField] TextMeshProUGUI dialogueText;
+    [SerializeField] TextMeshProUGUI nameText;
+    [SerializeField] GameObject dialoguePanel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -136,7 +106,7 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadScene(levelID);
     }
 
-    public void LoadNextLevel()
+    public void LoadNextScene()
     {
         LoadLevel(SceneManager.GetActiveScene().buildIndex + 1);
     }
@@ -151,7 +121,7 @@ public class GameManager : MonoBehaviour
         Application.Quit();
     }
 
-    //delete later if it doesn't work, testing dialogue systems
+    //delete later if it doesn't work, testing dialogue / npc system
     public void ShowDialogue(string dialogue, string name)
     {
         nameText.text = name + "...";
@@ -164,48 +134,5 @@ public class GameManager : MonoBehaviour
         nameText.text = null;
         dialogueText.text = null; ;
         dialoguePanel.SetActive(false);
-    }
-
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(this);
-        }
-    }
-    public void StartDialogue(string[] dialogue, int startPosition, string name)
-    {
-        nameText.text = name + "...";
-        dialogueBox.gameObject.SetActive(true);
-        StopAllCoroutines();
-        StartCoroutine(RunDialogue(dialogue, startPosition));
-    }
-
-    IEnumerator RunDialogue(string[] dialogue, int startPosition)
-    {
-        skipLineTriggered = false;
-        OnDialogueStarted?.Invoke();
-
-        for (int i = startPosition; i < dialogue.Length; i++)
-        {
-            dialogueText.text = dialogue[i];
-            while (skipLineTriggered == false)
-            {
-                yield return null;
-            }
-            skipLineTriggered = false;
-        }
-
-        OnDialogueEnded?.Invoke();
-        dialogueBox.gameObject.SetActive(false);
-    }
-
-    public void SkipLine()
-    {
-        skipLineTriggered = true;
     }
 }

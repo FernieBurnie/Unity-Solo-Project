@@ -1,5 +1,6 @@
 using System.Collections;
 using Unity.Cinemachine;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -32,15 +33,16 @@ public class PlayerController : MonoBehaviour
     public float jumpDetectDistance = 1.1f;
     public bool jumpBoostActivated = false;
 
+    //delete later if it doesn't work, testing dialogue / npc system
+    public DialogueAsset dialogue;
+    [SerializeField] float talkDistance = 2;
+    bool inConversation;
+
     public float hazardCooldown = 3f;
     public float poisonDuration = 4;
     public float poisonInterval = 1;
     public float damageTimer = 0f;
     public bool toggleSprint = true;
-
-    //delete later if it doesn't work, testing dialogue system
-    public float talkDistance = 2f;
-    bool inConversation;
 
     public float enemyCooldown = 1f;
     public int enemyDamage = 1;
@@ -137,6 +139,12 @@ public class PlayerController : MonoBehaviour
                     regenStamina = false;
                 }
             }
+            //delete later if it doesn't work, testing dialogue / npc system
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                Interact();
+            }
         }
 
         rb.linearVelocity = tempMove;
@@ -145,15 +153,10 @@ public class PlayerController : MonoBehaviour
         {
             damageTimer -= Time.deltaTime;
         }
-
-        //delete later if it doesn't work, testing dialogue systems
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            Interact();
-        }
     }
 
-    public void Interact()
+    //delete later if it doesn't work, testing dialogue / npc system
+    void Interact()
     {
         if (inConversation)
         {
@@ -166,7 +169,7 @@ public class PlayerController : MonoBehaviour
                 if (hitInfo.collider.gameObject.TryGetComponent(out NPC npc))
                 {
                     DialogueBoxController.instance.StartDialogue(npc.dialogueAsset.dialogue, npc.StartPosition, npc.npcName);
-                }    
+                }
             }
         }
     }
@@ -184,14 +187,15 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         DialogueBoxController.OnDialogueStarted += JoinConversation;
-        DialogueBoxController.OnDisalogueEnded += LeaveConversation;
+        DialogueBoxController.OnDialogueEnded += LeaveConversation;
     }
 
     private void OnDisable()
     {
-        DialogueBoxController.OnDialogueStart -= JoinConversation;
+        DialogueBoxController.OnDialogueStarted -= JoinConversation;
         DialogueBoxController.OnDialogueEnded -= LeaveConversation;
     }
+    //delete all of the above
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -281,7 +285,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "LevelEnd")
         {
-            GameObject.Find("GameManager").GetComponent<GameManager>().LoadNextLevel();
+            GameObject.Find("GameManager").GetComponent<GameManager>().LoadNextScene();
         }
     }
 

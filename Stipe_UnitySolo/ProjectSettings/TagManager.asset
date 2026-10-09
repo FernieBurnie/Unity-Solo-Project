@@ -12,6 +12,7 @@ TagManager:
   - Wall
   - Pause
   - LevelEnd
+  - LevelReturn
   layers:
   - Default
   - TransparentFX

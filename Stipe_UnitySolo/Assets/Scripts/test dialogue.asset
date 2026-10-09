@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ca1bea67f0cf56b44b63a91565639509, type: 3}
-  m_Name: Dialogue Assest
-  m_EditorClassIdentifier: Assembly-CSharp::Dialogue
-  dialogue: []
+  m_Script: {fileID: 11500000, guid: 475bb91d43319214eb25df0b80e49397, type: 3}
+  m_Name: test dialogue
+  m_EditorClassIdentifier: Assembly-CSharp::DialogueAsset
+  dialogue:
+  - 'Testing testing, hello hello!
+
+'
