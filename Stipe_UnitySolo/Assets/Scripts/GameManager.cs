@@ -10,19 +10,13 @@ public class GameManager : MonoBehaviour
 
     public GameObject pauseMenu;
     public bool paused = false;
-    
-    //change name later, kept as enemy for now
-    public int enemyCount = 0;
+
+    public int collectablesCount = 0;
 
     public TextMeshProUGUI BoostActivationText;
 
     public Image healthBar;
     public Image staminaBar;
-    //delete later if it doesn't work, testing dialogue system / npc
-
-    [SerializeField] TextMeshProUGUI dialogueText;
-    [SerializeField] TextMeshProUGUI nameText;
-    [SerializeField] GameObject dialoguePanel;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -31,7 +25,6 @@ public class GameManager : MonoBehaviour
 
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
-
             player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
 
             BoostActivationText = GameObject.Find("Boost Active").GetComponent<TextMeshProUGUI>();
@@ -43,9 +36,7 @@ public class GameManager : MonoBehaviour
 
             pauseMenu.SetActive(false);
 
-            //change name later, kept as enemy for now
-
-            enemyCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+            collectablesCount = GameObject.FindGameObjectsWithTag("Collectable").Length;
         }
 
     }
@@ -53,7 +44,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (SceneManager.GetActiveScene().buildIndex != 0)
+        if (SceneManager.GetActiveScene().buildIndex >= 0)
         {
             if (paused)
             {
@@ -119,20 +110,5 @@ public class GameManager : MonoBehaviour
     public void Quit()
     {
         Application.Quit();
-    }
-
-    //delete later if it doesn't work, testing dialogue / npc system
-    public void ShowDialogue(string dialogue, string name)
-    {
-        nameText.text = name + "...";
-        dialogueText.text = dialogue;
-        dialoguePanel.SetActive(true);
-    }
-
-    public void EndDialogue()
-    {
-        nameText.text = null;
-        dialogueText.text = null; ;
-        dialoguePanel.SetActive(false);
     }
 }

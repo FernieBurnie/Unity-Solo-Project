@@ -33,11 +33,6 @@ public class PlayerController : MonoBehaviour
     public float jumpDetectDistance = 1.1f;
     public bool jumpBoostActivated = false;
 
-    //delete later if it doesn't work, testing dialogue / npc system
-    public DialogueAsset dialogue;
-    [SerializeField] float talkDistance = 2;
-    bool inConversation;
-
     public float hazardCooldown = 3f;
     public float poisonDuration = 4;
     public float poisonInterval = 1;
@@ -82,16 +77,16 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        if(poisoned)
+        if (poisoned)
         {
             if (!poisonDmg)
                 StartCoroutine("poisonEffect");
         }
-            
+
         wallRJumpRay.origin = transform.position;
         wallLJumpRay.origin = transform.position;
         footJumpRay.origin = transform.position;
-        
+
         footJumpRay.direction = -transform.up;
         wallRJumpRay.direction = transform.right;
         wallLJumpRay.direction = -transform.right;
@@ -139,63 +134,14 @@ public class PlayerController : MonoBehaviour
                     regenStamina = false;
                 }
             }
-            //delete later if it doesn't work, testing dialogue / npc system
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                Interact();
-            }
         }
-
         rb.linearVelocity = tempMove;
 
-        if (damageTimer>0)
+        if (damageTimer > 0)
         {
             damageTimer -= Time.deltaTime;
         }
     }
-
-    //delete later if it doesn't work, testing dialogue / npc system
-    void Interact()
-    {
-        if (inConversation)
-        {
-            DialogueBoxController.instance.SkipLine();
-        }
-        else
-        {
-            if (Physics.Raycast(new Ray(transform.position, transform.forward), out RaycastHit hitInfo, talkDistance))
-            {
-                if (hitInfo.collider.gameObject.TryGetComponent(out NPC npc))
-                {
-                    DialogueBoxController.instance.StartDialogue(npc.dialogueAsset.dialogue, npc.StartPosition, npc.npcName);
-                }
-            }
-        }
-    }
-
-    void JoinConversation()
-    {
-        inConversation = true;
-    }
-
-    void LeaveConversation()
-    {
-        inConversation = false;
-    }
-
-    private void OnEnable()
-    {
-        DialogueBoxController.OnDialogueStarted += JoinConversation;
-        DialogueBoxController.OnDialogueEnded += LeaveConversation;
-    }
-
-    private void OnDisable()
-    {
-        DialogueBoxController.OnDialogueStarted -= JoinConversation;
-        DialogueBoxController.OnDialogueEnded -= LeaveConversation;
-    }
-    //delete all of the above
 
     public void Move(InputAction.CallbackContext context)
     {
@@ -231,6 +177,12 @@ public class PlayerController : MonoBehaviour
             collision.gameObject.SetActive(false);
 
             jumpHeight += jumpBoost;
+
+        }
+
+        //work on more when possible
+        if (collision.tag == "Collectable")
+        {
 
         }
     }
