@@ -12,8 +12,8 @@ TagManager:
   - Wall
   - Pause
   - LevelEnd
-  - LevelReturn
   - Collectable
+  - OutOfBounds
   layers:
   - Default
   - TransparentFX

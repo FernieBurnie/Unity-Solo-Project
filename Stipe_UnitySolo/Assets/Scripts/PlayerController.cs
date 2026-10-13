@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
+    private Vector2 originalPosition;
+    
     public bool hazardDamage = false;
     public bool poisoned = false;
     public bool poisonDmg = false;
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
         // Initalizing component data
         rb = GetComponent<Rigidbody2D>();
         playerInput = GetComponent<PlayerInput>();
+        originalPosition = transform.position;
 
         currentEquipment = null;
 
@@ -74,7 +77,7 @@ public class PlayerController : MonoBehaviour
         // Die
         if (health <= 0)
         {
-
+            Die();
         }
 
         if (poisoned)
@@ -239,6 +242,11 @@ public class PlayerController : MonoBehaviour
         {
             GameObject.Find("GameManager").GetComponent<GameManager>().LoadNextScene();
         }
+
+        if (collision.gameObject.tag == "OutOfBounds")
+        {
+            Die();
+        }
     }
 
 
@@ -269,6 +277,16 @@ public class PlayerController : MonoBehaviour
                 StopCoroutine("damageCooldown");
                 hazardDamage = false;
             }
+        }
+    }
+
+    public void Die()
+    {
+        transform.position = originalPosition;
+            if (rb!= null)
+        {
+            rb.linearVelocity = Vector2.zero;
+            rb.angularVelocity = 0f;
         }
     }
 
