@@ -1610,7 +1610,7 @@ MonoBehaviour:
   - Hello..
   - Are you some sort of.. frog?
   index: 0
-  contButton: {fileID: 0}
+  contButton: {fileID: 1486992096}
   wordSpeed: 0.06
   playerIsClose: 0
 --- !u!1 &425859797
@@ -3435,8 +3435,8 @@ Transform:
   m_GameObject: {fileID: 731149539}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.48246038, y: -10.969998, z: 0}
-  m_LocalScale: {x: 0.011504004, y: 15.916676, z: 1}
+  m_LocalPosition: {x: -0.48246038, y: -9.5414, z: 0}
+  m_LocalScale: {x: 0.011504004, y: 18.773613, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 98744734}
@@ -6673,8 +6673,8 @@ Transform:
   m_GameObject: {fileID: 1011150357}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.4933, y: -10.969998, z: 0}
-  m_LocalScale: {x: 0.011504004, y: 15.916676, z: 1}
+  m_LocalPosition: {x: 0.4933, y: -9.4774, z: 0}
+  m_LocalScale: {x: 0.011504004, y: 18.902645, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 98744734}

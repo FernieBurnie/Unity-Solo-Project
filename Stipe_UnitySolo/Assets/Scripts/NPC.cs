@@ -19,6 +19,8 @@ public class NPC : MonoBehaviour
     {
         dialogueText.text = "";
     }
+    //UnityEngine.InputSystem.Keyboard.current != null &&
+    //UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame
 
     void Update()
     {
