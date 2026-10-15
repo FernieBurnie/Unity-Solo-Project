@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 using TMPro;
 
 public class NPC : MonoBehaviour
@@ -19,8 +20,6 @@ public class NPC : MonoBehaviour
     {
         dialogueText.text = "";
     }
-    //UnityEngine.InputSystem.Keyboard.current != null &&
-    //UnityEngine.InputSystem.Keyboard.current.eKey.wasPressedThisFrame
 
     void Update()
     {
