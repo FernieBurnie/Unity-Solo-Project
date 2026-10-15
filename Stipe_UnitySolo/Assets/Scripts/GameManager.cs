@@ -3,6 +3,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 using System;
+using System.Collections;
+using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
@@ -17,6 +19,16 @@ public class GameManager : MonoBehaviour
 
     public Image healthBar;
     public Image staminaBar;
+
+    //delete later if it doesn't work, testing npc system
+    public GameObject dialoguePanel;
+    public TextMeshProUGUI dialogueText;
+    public string[] dialogue;
+    public int index;
+
+    public GameObject contButton;
+    public float wordSpeed;
+    public bool playerIsClose;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -72,7 +84,79 @@ public class GameManager : MonoBehaviour
             else
                 BoostActivationText.text = "";
         }
+
+        /*if (Keyboard.current[InputSystem.].wasPressedThisFrame && playerIsClose)
+        {
+            if (dialoguePanel.gameObject.activeInHierarchy)
+            {
+                zeroText();
+            }
+            else
+            {
+                dialoguePanel.SetActive(true);
+                StartCoroutine(Typing());
+            }
+        }
+
+        if (dialogueText.text == dialogue[index])
+        {
+            contButton.SetActive(true);
+        }
+        else
+        {
+            contButton.SetActive(false);
+        }*/
     }
+
+    /*public void zeroText()
+    {
+        dialogueText.text = "";
+        index = 0;
+        dialoguePanel.SetActive(false);
+    }
+    
+    IEnumerator Typing()
+    {
+        foreach (char letter in dialogue[index].ToCharArray())
+        {
+            dialogueText.text += letter;
+            yield return new WaitForSeconds(wordSpeed);
+        }
+    }
+    public void NextLine()
+    {
+
+
+        contButton.SetActive(false);
+
+        if (index < dialogue.Length - 1)
+        {
+            index++;
+            dialogueText.text = "";
+            StartCoroutine(Typing());
+        }
+        else
+        {
+            zeroText();
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerIsClose = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerIsClose = false;
+            zeroText();
+        }
+    }*/
 
     public void Pause()
     {
@@ -85,7 +169,7 @@ public class GameManager : MonoBehaviour
         {
             Time.timeScale = 1;
         }
-        
+
         pauseMenu.SetActive(paused);
     }
 
