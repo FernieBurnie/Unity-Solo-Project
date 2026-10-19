@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public GameObject pauseMenu;
     public bool paused = false;
 
-    public int collectablesCount = 0;
+    public int collectablesCount;
 
     public TextMeshProUGUI BoostActivationText;
 
