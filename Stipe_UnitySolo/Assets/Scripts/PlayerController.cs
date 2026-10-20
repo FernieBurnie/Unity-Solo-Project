@@ -8,6 +8,8 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private Vector2 originalPosition;
+    SpriteRenderer sr;
+    Animator anim;
     
     public bool hazardDamage = false;
     public bool poisoned = false;
@@ -58,6 +60,8 @@ public class PlayerController : MonoBehaviour
     {
         // Initalizing component data
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
         playerInput = GetComponent<PlayerInput>();
         originalPosition = transform.position;
 

@@ -2596,7 +2596,7 @@ Transform:
   m_GameObject: {fileID: 519420028}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.32, y: -1.68, z: -10}
+  m_LocalPosition: {x: -11.91, y: -1.19, z: -10}
   m_LocalScale: {x: 2.3, y: 2.5833, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6774,7 +6774,7 @@ Transform:
   m_GameObject: {fileID: 1211216250}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12.32, y: -1.68, z: -10}
+  m_LocalPosition: {x: -11.91, y: -1.19, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -7627,12 +7627,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 3487889397223288637, guid: e92310f372bb9ce4f82ddbd336930213, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.3502
+      objectReference: {fileID: 0}
+    - target: {fileID: 3487889397223288637, guid: e92310f372bb9ce4f82ddbd336930213, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.3304
+      objectReference: {fileID: 0}
+    - target: {fileID: 3487889397223288637, guid: e92310f372bb9ce4f82ddbd336930213, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -12.32
+      value: -11.91
       objectReference: {fileID: 0}
     - target: {fileID: 3487889397223288637, guid: e92310f372bb9ce4f82ddbd336930213, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.68
+      value: -1.19
       objectReference: {fileID: 0}
     - target: {fileID: 3487889397223288637, guid: e92310f372bb9ce4f82ddbd336930213, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7664,6 +7672,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3487889397223288637, guid: e92310f372bb9ce4f82ddbd336930213, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721544329959697834, guid: e92310f372bb9ce4f82ddbd336930213, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721544329959697834, guid: e92310f372bb9ce4f82ddbd336930213, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721544329959697834, guid: e92310f372bb9ce4f82ddbd336930213, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 3956209891020706849, guid: 4ebca80abb4a7a141af3e73d7b3051b2, type: 3}
+    - target: {fileID: 4721544329959697834, guid: e92310f372bb9ce4f82ddbd336930213, type: 3}
+      propertyPath: m_DrawMode
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7677394097488248632, guid: e92310f372bb9ce4f82ddbd336930213, type: 3}
