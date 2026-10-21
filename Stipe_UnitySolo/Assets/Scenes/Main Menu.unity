@@ -1186,9 +1186,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   player: {fileID: 0}
   pauseMenu: {fileID: 0}
+  Door: {fileID: 0}
+  doorOpen: 0
   paused: 0
   collectablesCount: 0
   BoostActivationText: {fileID: 0}
+  counter: {fileID: 0}
   healthBar: {fileID: 0}
   staminaBar: {fileID: 0}
 --- !u!4 &1388862580

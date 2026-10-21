@@ -49,6 +49,7 @@ public class PlayerController : MonoBehaviour
     PlayerInput playerInput;
     Rigidbody2D rb;
     public GameObject currentEquipment;
+    public GameManager gm;
 
     Ray2D footJumpRay;
     Ray2D wallLJumpRay;
@@ -187,10 +188,10 @@ public class PlayerController : MonoBehaviour
 
         }
 
-        //work on more when possible
-        if (collision.tag == "Collectable")
+        if (collision.gameObject.CompareTag("Collectable"))
         {
-
+            Destroy(collision.gameObject);
+            gm.collectablesCount++;
         }
     }
 
@@ -252,7 +253,6 @@ public class PlayerController : MonoBehaviour
             Die();
         }
     }
-
 
     private void OnCollisionStay2D(Collision2D collision)
     {

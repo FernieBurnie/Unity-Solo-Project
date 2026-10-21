@@ -11,11 +11,14 @@ public class GameManager : MonoBehaviour
     public PlayerController player;
 
     public GameObject pauseMenu;
+    public GameObject Door;
+    public bool doorOpen;
     public bool paused = false;
 
     public int collectablesCount;
 
     public TextMeshProUGUI BoostActivationText;
+    public TextMeshProUGUI counter;
 
     public Image healthBar;
     public Image staminaBar;
@@ -73,6 +76,14 @@ public class GameManager : MonoBehaviour
             }
             else
                 BoostActivationText.text = "";
+
+            counter.text = ": " + collectablesCount.ToString();
+        }
+
+        if(collectablesCount == 4)
+        {
+            doorOpen = true;
+            Destroy(Door);
         }
     }
 
