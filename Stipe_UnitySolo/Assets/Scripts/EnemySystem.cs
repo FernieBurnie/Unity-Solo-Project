@@ -12,6 +12,9 @@ public class Enemy : MonoBehaviour
     public float detectionDistance = 2;
     public float stoppingDistance = 1;
 
+    SpriteRenderer sr;
+    Animator anim;
+
     public PlayerController player;
     public Rigidbody2D rb;
 
@@ -20,6 +23,8 @@ public class Enemy : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         rb = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     // Update is called once per frame
