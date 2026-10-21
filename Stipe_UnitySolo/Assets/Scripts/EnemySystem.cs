@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    SpriteRenderer sr;
+    Animator anim;
+
     public bool isFollowing = false;
 
     public int health = 3;
@@ -11,9 +14,6 @@ public class Enemy : MonoBehaviour
     public float speed = 3.5f;
     public float detectionDistance = 2;
     public float stoppingDistance = 1;
-
-    SpriteRenderer sr;
-    Animator anim;
 
     public PlayerController player;
     public Rigidbody2D rb;
@@ -34,18 +34,29 @@ public class Enemy : MonoBehaviour
 
         isFollowing = targetDistance <= detectionDistance;
 
+        anim.SetBool("isWalking", isFollowing);
+        anim.speed = speed / 3.5f;
+
         if (isFollowing)
         {
             if (player.transform.position.x < transform.position.x)
+            {
+                sr.flipX = true;
                 rb.linearVelocityX = -speed;
-
+            }
             else if (player.transform.position.x > transform.position.x)
+            {
+                sr.flipX = false;
                 rb.linearVelocityX = speed;
-
+            }
             else if (Mathf.Abs(player.transform.position.x - transform.position.x) <= stoppingDistance)
+            {
                 rb.linearVelocityX = 0;
+            }
         }
         else
+        {
             rb.linearVelocityX = 0;
+        }
     }
 }
