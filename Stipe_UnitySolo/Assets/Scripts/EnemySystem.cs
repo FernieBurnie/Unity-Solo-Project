@@ -34,7 +34,7 @@ public class Enemy : MonoBehaviour
 
         isFollowing = targetDistance <= detectionDistance;
 
-        anim.SetBool("isWalking", isFollowing);
+        anim.SetBool("enemywalking", isFollowing);
         anim.speed = speed / 3.5f;
 
         if (isFollowing)

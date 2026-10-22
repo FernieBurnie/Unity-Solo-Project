@@ -26,6 +26,8 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        collectablesCount = 0;
+
         Time.timeScale = 1;
 
         if (SceneManager.GetActiveScene().buildIndex != 0)

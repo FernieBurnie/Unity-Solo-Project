@@ -48,6 +48,7 @@ public class PlayerController : MonoBehaviour
 
     PlayerInput playerInput;
     Rigidbody2D rb;
+    public AudioSource speaker;
     public GameObject currentEquipment;
     public GameManager gm;
 
@@ -64,6 +65,7 @@ public class PlayerController : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         playerInput = GetComponent<PlayerInput>();
+        speaker = GetComponent<AudioSource>();
         originalPosition = transform.position;
 
         currentEquipment = null;
@@ -158,8 +160,12 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
+        speaker.Play();
+
         if (Physics2D.Raycast(footJumpRay.origin, footJumpRay.direction, jumpDetectDistance) || (Physics2D.Raycast(wallRJumpRay.origin, wallRJumpRay.direction, jumpDetectDistance) || Physics2D.Raycast(wallLJumpRay.origin, wallLJumpRay.direction, jumpDetectDistance)))
+        {
             rb.AddForceY(jumpHeight, ForceMode2D.Impulse);
+        }
     }
 
     public void ActivateEquipment()
