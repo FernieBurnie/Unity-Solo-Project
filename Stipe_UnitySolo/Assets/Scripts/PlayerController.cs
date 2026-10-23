@@ -8,8 +8,6 @@ using UnityEngine.SceneManagement;
 public class PlayerController : MonoBehaviour
 {
     private Vector2 originalPosition;
-    SpriteRenderer sr;
-    Animator anim;
     
     public bool hazardDamage = false;
     public bool poisoned = false;
@@ -48,9 +46,12 @@ public class PlayerController : MonoBehaviour
 
     PlayerInput playerInput;
     Rigidbody2D rb;
+    SpriteRenderer sr;
+    Animator anim;
     public AudioSource speaker;
     public GameObject currentEquipment;
     public GameManager gm;
+
 
     Ray2D footJumpRay;
     Ray2D wallLJumpRay;
@@ -163,6 +164,7 @@ public class PlayerController : MonoBehaviour
         if (Physics2D.Raycast(footJumpRay.origin, footJumpRay.direction, jumpDetectDistance) || (Physics2D.Raycast(wallRJumpRay.origin, wallRJumpRay.direction, jumpDetectDistance) || Physics2D.Raycast(wallLJumpRay.origin, wallLJumpRay.direction, jumpDetectDistance)))
         {
             rb.AddForceY(jumpHeight, ForceMode2D.Impulse);
+            
             speaker.Play();
         }
     }
@@ -292,7 +294,8 @@ public class PlayerController : MonoBehaviour
     public void Die()
     {
         transform.position = originalPosition;
-            if (rb!= null)
+            
+        if (rb!= null)
         {
             rb.linearVelocity = Vector2.zero;
             rb.angularVelocity = 0f;
