@@ -160,11 +160,10 @@ public class PlayerController : MonoBehaviour
 
     public void Jump()
     {
-        speaker.Play();
-
         if (Physics2D.Raycast(footJumpRay.origin, footJumpRay.direction, jumpDetectDistance) || (Physics2D.Raycast(wallRJumpRay.origin, wallRJumpRay.direction, jumpDetectDistance) || Physics2D.Raycast(wallLJumpRay.origin, wallLJumpRay.direction, jumpDetectDistance)))
         {
             rb.AddForceY(jumpHeight, ForceMode2D.Impulse);
+            speaker.Play();
         }
     }
 
