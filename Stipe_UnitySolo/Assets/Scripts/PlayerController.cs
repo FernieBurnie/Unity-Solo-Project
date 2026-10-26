@@ -94,7 +94,7 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine("poisonEffect");
         }
 
-        if (moveInput.x >= 0)
+        if (moveInput.x > 0)
         {
             sr.flipX = false;
             anim.SetBool("isWalking", true);
@@ -181,6 +181,12 @@ public class PlayerController : MonoBehaviour
             rb.AddForceY(jumpHeight, ForceMode2D.Impulse);
             
             speaker.Play();
+
+            anim.SetBool("isJumping", true);
+        }
+        else 
+        {
+            anim.SetBool("isJumping", false);
         }
     }
 

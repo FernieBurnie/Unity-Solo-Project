@@ -8,6 +8,8 @@ using UnityEngine.InputSystem;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager instance;
+
     public PlayerController player;
 
     public GameObject pauseMenu;
@@ -15,7 +17,7 @@ public class GameManager : MonoBehaviour
     public bool doorOpen;
     public bool paused = false;
 
-    public int collectablesCount;
+    public int collectablesCount = 0;
 
     public TextMeshProUGUI BoostActivationText;
     public TextMeshProUGUI counter;
@@ -26,7 +28,7 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        collectablesCount = 0;
+        //UpdateUI();
 
         Time.timeScale = 1;
 
@@ -82,10 +84,24 @@ public class GameManager : MonoBehaviour
             counter.text = ": " + collectablesCount.ToString();
         }
 
-        if(collectablesCount == 4)
+        if (collectablesCount == 4)
         {
             doorOpen = true;
             Destroy(Door);
+        }
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
         }
     }
 
@@ -106,7 +122,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadLevel(int levelID)
     {
-        if(levelID >= SceneManager.sceneCountInBuildSettings)
+        if (levelID >= SceneManager.sceneCountInBuildSettings)
             Debug.Log("Scene ID too high: " + levelID);
         else
             SceneManager.LoadScene(levelID);
@@ -115,6 +131,12 @@ public class GameManager : MonoBehaviour
     public void LoadNextScene()
     {
         LoadLevel(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void AddCollectable(int amount)
+    {
+        collectablesCount += amount;
+        Debug.Log("Total Collectables: " + collectablesCount);
     }
 
     public void MainMenu()

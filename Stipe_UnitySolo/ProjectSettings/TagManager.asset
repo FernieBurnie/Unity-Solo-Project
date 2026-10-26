@@ -14,11 +14,12 @@ TagManager:
   - LevelEnd
   - Collectable
   - OutOfBounds
+  - LevelReturn
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Background
   - Water
   - UI
   - 
