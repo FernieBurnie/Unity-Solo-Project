@@ -94,6 +94,21 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine("poisonEffect");
         }
 
+        if (moveInput.x >= 0)
+        {
+            sr.flipX = false;
+            anim.SetBool("isWalking", true);
+        }
+        else if (moveInput.x < 0)
+        {
+            sr.flipX = true;
+            anim.SetBool("isWalking", true);
+        }
+        else
+        {
+            anim.SetBool("isWalking", false);
+        }
+
         wallRJumpRay.origin = transform.position;
         wallLJumpRay.origin = transform.position;
         footJumpRay.origin = transform.position;

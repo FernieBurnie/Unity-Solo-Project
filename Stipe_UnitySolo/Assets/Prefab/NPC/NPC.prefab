@@ -366,7 +366,7 @@ CapsuleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -435,8 +435,17 @@ MonoBehaviour:
   triggerCanvas: {fileID: 2713951282469079421}
   dialogueText: {fileID: 0}
   dialogue:
-  - Hello?
+  - What a cute frog!
+  - Oh, you can speak?
+  - Well, didn't your mother teach you not to talk to strangers?
   index: 0
   contButton: {fileID: 0}
   wordSpeed: 0
   playerIsClose: 0
+  Choice1: {fileID: 0}
+  Choice2: {fileID: 0}
+  choice1Dialogue:
+  - Hm...
+  choice2Dialogue:
+  - okay
+  choiceTrigger: 1
