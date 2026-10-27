@@ -9,6 +9,7 @@ using UnityEngine.InputSystem;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
+    GameManager gm;
 
     public PlayerController player;
 
@@ -42,10 +43,10 @@ public class GameManager : MonoBehaviour
             staminaBar = GameObject.Find("Stamina").GetComponent<Image>();
 
             pauseMenu = GameObject.FindGameObjectWithTag("Pause");
-
-            pauseMenu.SetActive(false);
-
-            collectablesCount = GameObject.FindGameObjectsWithTag("Collectable").Length;
+            if (pauseMenu != null)
+            {
+                pauseMenu.SetActive(false);
+            }
         }
 
     }
@@ -58,17 +59,13 @@ public class GameManager : MonoBehaviour
             if (paused)
             {
                 Time.timeScale = 0;
-
-                pauseMenu.SetActive(true);
-                ;
+                if (pauseMenu != null) pauseMenu.SetActive(true);
             }
-            else
+            else 
             {
                 Time.timeScale = 1;
-
-                pauseMenu.SetActive(false);
+                if (pauseMenu != null) pauseMenu.SetActive(false);
             }
-
 
             healthBar.fillAmount = (float)player.health / (float)player.maxHealth;
 
@@ -82,6 +79,11 @@ public class GameManager : MonoBehaviour
                 BoostActivationText.text = "";
 
             counter.text = ": " + collectablesCount.ToString();
+        }
+
+        if (gm != null)
+        {
+            counter.text = "Collectables: " + gm.collectablesCount;
         }
 
         if (collectablesCount == 4)
@@ -101,7 +103,57 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
-            return;
+        }
+    }
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        Time.timeScale = 1;
+
+        if (scene.buildIndex > 0)
+        {
+            if (GameObject.FindGameObjectWithTag("Player") != null)
+            {
+                player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+                GameObject spawnPoint = GameObject.FindGameObjectWithTag("SpawnPoint");
+
+                if (spawnPoint != null)
+                {
+                    player.transform.position = spawnPoint.transform.position;
+                }
+            }
+
+            if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>())
+            {
+                player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+            }
+            if (GameObject.Find("Boost Active") != null)
+            {
+                BoostActivationText = GameObject.Find("Boost Active").GetComponent<TextMeshProUGUI>();
+            }
+            if (GameObject.Find("Health") != null)
+            {
+                healthBar = GameObject.Find("Health").GetComponent<Image>();
+            }
+            if (GameObject.Find("Stamina") != null)
+            {
+                staminaBar = GameObject.Find("Stamina").GetComponent<Image>();
+            }
+            if (GameObject.FindGameObjectWithTag("Pause") != null)
+            {
+                pauseMenu = GameObject.FindGameObjectWithTag("Pause");
+                pauseMenu.SetActive(false);
+            }
         }
     }
 

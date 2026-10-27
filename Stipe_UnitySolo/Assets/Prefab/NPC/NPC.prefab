@@ -435,9 +435,8 @@ MonoBehaviour:
   triggerCanvas: {fileID: 2713951282469079421}
   dialogueText: {fileID: 0}
   dialogue:
-  - What a cute frog!
-  - Oh, you can speak?
-  - Well, didn't your mother teach you not to talk to strangers?
+  - WOAH- IS THAT A FROG?
+  - HELLO
   index: 0
   contButton: {fileID: 0}
   wordSpeed: 0
@@ -445,7 +444,11 @@ MonoBehaviour:
   Choice1: {fileID: 0}
   Choice2: {fileID: 0}
   choice1Dialogue:
-  - Hm...
+  - ok
+  - yea
   choice2Dialogue:
-  - okay
+  - thats fine
+  - cool
   choiceTrigger: 1
+  isChoice2: 0
+  unlockedDialogue: []

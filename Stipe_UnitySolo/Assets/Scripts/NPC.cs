@@ -25,6 +25,7 @@ public class NPC : MonoBehaviour
     public string[] choice1Dialogue;
     public string[] choice2Dialogue;
     public int choiceTrigger = 1;
+    public bool isChoice2 = false;
 
     public string[] unlockedDialogue;
 
@@ -72,17 +73,24 @@ public class NPC : MonoBehaviour
 
         string currentLine = "";
 
-        if (hasSpokenToNPC2 && unlockedDialogue.Length > 0)
+        if (hasSpokenToNPC2 && unlockedDialogue != null && unlockedDialogue.Length > 0)
         {
             currentLine = unlockedDialogue[index];
         }
-        else if (!usingBranch)
+        else if (usingBranch)
+        {
+            if (isChoice2)
+            {
+                currentLine = choice2Dialogue[index];
+            }
+            else
+            {
+                currentLine = choice1Dialogue[index];
+            }
+        }
+        else
         {
             currentLine = dialogue[index];
-        }
-        else 
-        {
-            currentLine = choice1Dialogue[index];
         }
 
         foreach (char letter in currentLine.ToCharArray())
@@ -139,6 +147,7 @@ public class NPC : MonoBehaviour
     {
         HideChoices();
         usingBranch = true;
+        isChoice2 = false;
         index = 0;
         dialogueText.text = "";
         StartCoroutine(Typing());
@@ -148,6 +157,7 @@ public class NPC : MonoBehaviour
     {
         HideChoices();
         usingBranch = true;
+        isChoice2 = true;
         index = 0;
         dialogueText.text = "";
         StartCoroutine(Typing());
@@ -164,19 +174,18 @@ public class NPC : MonoBehaviour
             dialogueStage = 1;
         }
 
+        usingBranch = false;
+
         if (dialogueStage == 0)
         {
-            usingBranch = false;
             StartCoroutine(Typing());
         }
         else if (dialogueStage == 1)
         {
-            usingBranch = true;
             StartCoroutine(Typing());
         }
         else if (dialogueStage == 2)
         {
-            usingBranch = true;
             StartCoroutine(Typing());
         }
     }

@@ -113,10 +113,13 @@ MonoBehaviour:
   hazardDamage: 0
   poisoned: 0
   poisonDmg: 0
-  sprinting: 0
   speed: 5
   health: 6
   maxHealth: 6
+  jumpHeight: 8
+  jumpBoost: 4
+  jumpBoostActivated: 0
+  jumpDetectDistance: 2.64
   stamina: 100
   maxStamina: 100
   sprintBoost: 2
@@ -128,10 +131,13 @@ MonoBehaviour:
   regenStamina: 0
   sprintStop: 0
   staminaStop: 0
-  jumpHeight: 4
-  jumpBoost: 2
-  jumpDetectDistance: 1.2
-  jumpBoostActivated: 0
+  sprinting: 0
+  jumpCost: 20
+  jumpCooldown: 0.4
+  canJump: 1
+  jumpStop: 0
+  wallJumpForceY: 13.01
+  wallJumpForceX: 9.22
   hazardCooldown: 3
   poisonDuration: 4
   poisonInterval: 1
@@ -268,7 +274,7 @@ MonoBehaviour:
       - m_Target: {fileID: 7613987212460419720}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: Jump
-        m_Mode: 1
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

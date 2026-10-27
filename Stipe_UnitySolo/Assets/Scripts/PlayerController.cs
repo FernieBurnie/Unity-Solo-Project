@@ -12,12 +12,17 @@ public class PlayerController : MonoBehaviour
     public bool hazardDamage = false;
     public bool poisoned = false;
     public bool poisonDmg = false;
-    public bool sprinting = false;
 
+    //general 
     public float speed = 5.0f;
     public int health = 6;
     public float maxHealth = 6;
+    public float jumpHeight = 4f;
+    public float jumpBoost = 2f;
+    public bool jumpBoostActivated = false;
+    public float jumpDetectDistance = 1.1f;
 
+    //stamina and sprinting
     public float stamina = 100f;
     public float maxStamina = 100f;
     public float sprintBoost = 2.0f;
@@ -29,11 +34,15 @@ public class PlayerController : MonoBehaviour
     public bool regenStamina = false;
     public bool sprintStop = false;
     public bool staminaStop = false;
+    public bool sprinting = false;
 
-    public float jumpHeight = 4f;
-    public float jumpBoost = 2f;
-    public float jumpDetectDistance = 1.1f;
-    public bool jumpBoostActivated = false;
+    //wall jumping
+    public float jumpCost = 20f;
+    public float jumpCooldown = 0.4f;
+    public bool canJump = true;
+    public bool jumpStop = false;
+    public float wallJumpForceY = 7f;
+    public float wallJumpForceX = 12f;
 
     public float hazardCooldown = 3f;
     public float poisonDuration = 4;
@@ -51,6 +60,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource speaker;
     public GameObject currentEquipment;
     public GameManager gm;
+    private static PlayerController instance;
 
 
     Ray2D footJumpRay;
@@ -108,10 +118,16 @@ public class PlayerController : MonoBehaviour
         {
             anim.SetBool("isWalking", false);
         }
-
-        wallRJumpRay.origin = transform.position;
-        wallLJumpRay.origin = transform.position;
         footJumpRay.origin = transform.position;
+        wallRJumpRay.origin = transform.position;
+        wallRJumpRay.origin = transform.position;
+
+        bool isGrounded = Physics2D.Raycast(footJumpRay.origin, footJumpRay.direction, jumpDetectDistance);
+
+        if (isGrounded)
+        {
+            anim.SetBool("isJumping", false);
+        }
 
         footJumpRay.direction = -transform.up;
         wallRJumpRay.direction = transform.right;
@@ -169,25 +185,66 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+            return;
+        }
+    }
+
     public void Move(InputAction.CallbackContext context)
     {
         moveInput.x = context.ReadValue<Vector2>().x;
     }
 
-    public void Jump()
+    public void Jump(InputAction.CallbackContext context)
     {
-        if (Physics2D.Raycast(footJumpRay.origin, footJumpRay.direction, jumpDetectDistance) || (Physics2D.Raycast(wallRJumpRay.origin, wallRJumpRay.direction, jumpDetectDistance) || Physics2D.Raycast(wallLJumpRay.origin, wallLJumpRay.direction, jumpDetectDistance)))
+        if (context.performed && canJump && stamina >= jumpCost)
         {
-            rb.AddForceY(jumpHeight, ForceMode2D.Impulse);
-            
-            speaker.Play();
+            bool grounded = Physics2D.Raycast(footJumpRay.origin, footJumpRay.direction, jumpDetectDistance);
+            bool hitLeftWall = Physics2D.Raycast(wallLJumpRay.origin, wallLJumpRay.direction, jumpDetectDistance);
+            bool hitRightWall = Physics2D.Raycast(wallRJumpRay.origin, wallRJumpRay.direction, jumpDetectDistance);
 
-            anim.SetBool("isJumping", true);
+            if (grounded)
+            {
+                rb.AddForce(Vector2.up * jumpHeight, ForceMode2D.Impulse);
+                PlayJumpEffects();
+            }
+            else if (hitLeftWall)
+            {
+                WallJump(1f);
+            }
+            if (hitRightWall)
+            {
+                WallJump(-1f);
+            }
         }
-        else 
-        {
-            anim.SetBool("isJumping", false);
-        }
+
+    }
+
+    void WallJump(float pushDir)
+    {
+        rb.linearVelocity = new Vector2(pushDir * wallJumpForceX, wallJumpForceY);
+        PlayJumpEffects();
+    }
+
+    void PlayJumpEffects()
+    {
+        speaker.Play();
+        anim.SetBool("isJumping", true);
+
+        stamina -= jumpCost;
+        if (stamina < 0) stamina = 0;
+
+        canJump = false;
+        StartCoroutine(jumpReset());
     }
 
     public void ActivateEquipment()
@@ -280,6 +337,13 @@ public class PlayerController : MonoBehaviour
         {
             Die();
         }
+
+        if (collision.gameObject.tag == "Collectable")
+        {
+            Destroy(collision.gameObject);
+
+            gm.collectablesCount++;
+        }
     }
 
     private void OnCollisionStay2D(Collision2D collision)
@@ -348,6 +412,14 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(poisonDuration);
 
         poisoned = false;
+    }
+
+    IEnumerator jumpReset()
+    {
+        jumpStop = true;
+        yield return new WaitForSeconds(jumpCooldown);
+        canJump = true;
+        jumpStop = false;
     }
 
     IEnumerator sprintReset()
