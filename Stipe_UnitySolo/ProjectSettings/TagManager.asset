@@ -50,8 +50,14 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Hidden layer
+    uniqueID: 138108701
+    locked: 0
   - name: Background
     uniqueID: 429768247
+    locked: 0
+  - name: ForeGround
+    uniqueID: 2262092067
     locked: 0
   - name: Default
     uniqueID: 0
