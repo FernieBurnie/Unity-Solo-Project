@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 928693368232105614}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 1}
+  m_LocalScale: {x: 0.07979061, y: 0.07187016, z: 1.7601}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2100934566463239592}
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -0.046, y: 1}
+  m_AnchoredPosition: {x: -2.48, y: 9.49}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1441887096888795268
@@ -130,14 +130,14 @@ RectTransform:
   m_GameObject: {fileID: 2713951282469079421}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.85, y: 0.89167, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3284767172445569920}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 79.5, y: 25}
+  m_AnchoredPosition: {x: 75.5, y: -16}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &576581935640059051
@@ -178,7 +178,7 @@ MonoBehaviour:
   m_fontColor32:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -270,7 +270,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 2.43, y: -1.59, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.2798, y: 0.2902, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3284767172445569920}
@@ -325,9 +325,9 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -9095717837082945937, guid: 207ee8102dd4143d288186ef0be518ee, type: 3}
+  m_Sprite: {fileID: -2391202019726663155, guid: 74e38babd620cf34986a7a8d91d17591, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 2}
@@ -370,8 +370,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 1, y: 2}
+  m_Offset: {x: -1.2134671, y: 0}
+  m_Size: {x: 27.616943, y: 26.627226}
   m_Direction: 0
 --- !u!61 &4799496362144203771
 BoxCollider2D:
@@ -407,17 +407,17 @@ BoxCollider2D:
   m_UsedByEffector: 1
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.43427467, y: -0.07851148}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 2}
+    oldSize: {x: 13.56, y: 13.28292}
     newSize: {x: 1, y: 2}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 4.62, y: 4.29}
+  m_Size: {x: 17.214031, y: 14.496149}
   m_EdgeRadius: 0
 --- !u!114 &2167277267162970357
 MonoBehaviour:
@@ -435,8 +435,8 @@ MonoBehaviour:
   triggerCanvas: {fileID: 2713951282469079421}
   dialogueText: {fileID: 0}
   dialogue:
-  - WOAH- IS THAT A FROG?
-  - HELLO
+  - WOAH!
+  - IS THAT A FROG?
   index: 0
   contButton: {fileID: 0}
   wordSpeed: 0
@@ -444,11 +444,12 @@ MonoBehaviour:
   Choice1: {fileID: 0}
   Choice2: {fileID: 0}
   choice1Dialogue:
-  - ok
-  - yea
+  - I don't believe you.
+  - WAIT, you can TALK?
   choice2Dialogue:
-  - thats fine
-  - cool
+  - AND YOU CAN TALK?
+  - DO YOU KNOW WHAT THE GOVERNMENT WILL DO WHEN THEY FIND YOU?!
+  - Tax you.
   choiceTrigger: 1
   isChoice2: 0
   unlockedDialogue: []

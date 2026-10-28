@@ -32,9 +32,12 @@ public class NPC : MonoBehaviour
     private bool usingBranch = false;
     private int dialogueStage = 0;
 
+    SpriteRenderer sr;
+
     void Start()
     {
         HideChoices();
+        sr = GetComponent<SpriteRenderer>();
     }
 
     void Update()

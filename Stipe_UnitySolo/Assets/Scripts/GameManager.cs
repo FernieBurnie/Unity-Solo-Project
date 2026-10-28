@@ -12,10 +12,11 @@ public class GameManager : MonoBehaviour
     GameManager gm;
 
     public PlayerController player;
+    public AudioSource speaker;
 
     public GameObject pauseMenu;
     public GameObject Door;
-    public bool doorOpen;
+    public bool doorOpen = false;
     public bool paused = false;
 
     public int collectablesCount = 0;
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        //UpdateUI();
+        speaker = GetComponent<AudioSource>();
 
         Time.timeScale = 1;
 
@@ -43,6 +44,7 @@ public class GameManager : MonoBehaviour
             staminaBar = GameObject.Find("Stamina").GetComponent<Image>();
 
             pauseMenu = GameObject.FindGameObjectWithTag("Pause");
+
             if (pauseMenu != null)
             {
                 pauseMenu.SetActive(false);
@@ -59,12 +61,12 @@ public class GameManager : MonoBehaviour
             if (paused)
             {
                 Time.timeScale = 0;
-                if (pauseMenu != null) pauseMenu.SetActive(true);
+                pauseMenu.SetActive(true);
             }
             else 
             {
                 Time.timeScale = 1;
-                if (pauseMenu != null) pauseMenu.SetActive(false);
+                pauseMenu.SetActive(false);
             }
 
             healthBar.fillAmount = (float)player.health / (float)player.maxHealth;
@@ -149,17 +151,13 @@ public class GameManager : MonoBehaviour
             {
                 staminaBar = GameObject.Find("Stamina").GetComponent<Image>();
             }
-            if (GameObject.FindGameObjectWithTag("Pause") != null)
-            {
-                pauseMenu = GameObject.FindGameObjectWithTag("Pause");
-                pauseMenu.SetActive(false);
-            }
         }
     }
 
     public void Pause()
     {
         paused = !paused;
+        
         if (paused)
         {
             Time.timeScale = 0;

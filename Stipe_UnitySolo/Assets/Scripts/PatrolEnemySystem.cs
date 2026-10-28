@@ -39,15 +39,5 @@ public class AdvancedEnemy : MonoBehaviour
         {
             movingRight = !movingRight;
         }
-
-        if (collision.gameObject.tag == "Player")
-        {
-            health--;
-        }
-
-        if (health <= 0)
-        {
-            Destroy(gameObject);
-        }
     }
 }
