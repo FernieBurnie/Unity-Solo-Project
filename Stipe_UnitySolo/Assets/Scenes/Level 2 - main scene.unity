@@ -603,13 +603,29 @@ PrefabInstance:
       propertyPath: dialoguePanel
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5089231490334437905, guid: 4540a9e44157c6544b6eb70dcbcc9bc2, type: 3}
+      propertyPath: m_FlipX
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5089231490334437905, guid: 4540a9e44157c6544b6eb70dcbcc9bc2, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -2037518003032355032, guid: 74e38babd620cf34986a7a8d91d17591, type: 3}
+    - target: {fileID: 6043342531693389428, guid: 4540a9e44157c6544b6eb70dcbcc9bc2, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.17047812
+      objectReference: {fileID: 0}
+    - target: {fileID: 6043342531693389428, guid: 4540a9e44157c6544b6eb70dcbcc9bc2, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.1650137
+      objectReference: {fileID: 0}
     - target: {fileID: 6043342531693389428, guid: 4540a9e44157c6544b6eb70dcbcc9bc2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -38.3
+      value: -37.95
       objectReference: {fileID: 0}
     - target: {fileID: 6043342531693389428, guid: 4540a9e44157c6544b6eb70dcbcc9bc2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -3.03
+      value: -2.22
       objectReference: {fileID: 0}
     - target: {fileID: 6043342531693389428, guid: 4540a9e44157c6544b6eb70dcbcc9bc2, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1040,6 +1056,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   player: {fileID: 1983055752}
+  speaker: {fileID: 0}
   pauseMenu: {fileID: 261418556}
   Door: {fileID: 1082002427}
   doorOpen: 0
@@ -4312,7 +4329,7 @@ Transform:
   m_GameObject: {fileID: 1619632188}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -42.03108, y: 3.2877827, z: -10}
+  m_LocalPosition: {x: -42.355183, y: 3.2871418, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

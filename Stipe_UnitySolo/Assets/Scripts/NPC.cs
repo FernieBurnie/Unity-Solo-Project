@@ -1,219 +1,100 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.InputSystem;
 using TMPro;
-//When using the prefabs, reassign everything
 
 public class NPC : MonoBehaviour
 {
-    public static bool hasSpokenToNPC2 = false;
-
     public GameObject dialoguePanel;
-    public GameObject triggerCanvas;
-    public TextMeshProUGUI dialogueText;
-    public string[] dialogue;
-    public int index;
+    public GameObject indicator;
+    public TMP_Text dialogueText;
+    public List<string> dialogues;
+    public float writingSpeed;
+    private int index;
+    private int charIndex;
+    private bool started;
+    private bool waitForNext;
 
-    public GameObject contButton;
-    public float wordSpeed;
-    public bool playerIsClose;
-
-    public GameObject Choice1;
-    public GameObject Choice2;
-    public string[] choice1Dialogue;
-    public string[] choice2Dialogue;
-    public int choiceTrigger = 1;
-    public bool isChoice2 = false;
-
-    public string[] unlockedDialogue;
-
-    private bool usingBranch = false;
-    private int dialogueStage = 0;
-
-    SpriteRenderer sr;
-
-    void Start()
+    private void Awake()
     {
-        HideChoices();
-        sr = GetComponent<SpriteRenderer>();
+        ToggleIndicator(false);
+        ToggleDialoguePanel(false);
+    }
+    
+    private void ToggleDialoguePanel(bool show)
+    {
+        dialoguePanel.SetActive(show);
     }
 
-    void Update()
+    public void ToggleIndicator(bool show)
     {
-        if (playerIsClose && Keyboard.current != null && Keyboard.current.eKey.wasPressedThisFrame)
-        {
-            if (!dialoguePanel.activeInHierarchy)
-            {
-                dialoguePanel.SetActive(true);
-                StartCoroutine(Typing());
-            }
-            else if (dialogueText.text == dialogue[index])
-            {
-                NextLine();
-            }
-            else
-            {
-                StopAllCoroutines();
-                dialogueText.text = dialogue[index];
-            }
-        }
-    }
-    public void zeroText()
-    {
-        dialogueText.text = "";
-        index = 0;
-        usingBranch = false;
-        dialoguePanel.SetActive(false);
-        HideChoices();
+        indicator.SetActive(show);
     }
 
-    IEnumerator Typing()
+    public void StartDialogue()
     {
-        contButton.SetActive(false);
-        HideChoices();
+        if (started)
+            return;
 
-        string currentLine = "";
+        started = true;
+        ToggleDialoguePanel(true);
+        ToggleIndicator(false);
+        GetDialogue(0);
+    }
 
-        if (hasSpokenToNPC2 && unlockedDialogue != null && unlockedDialogue.Length > 0)
+    private void GetDialogue(int i)
+    {
+        index = i;
+        charIndex = 0;
+        dialogueText.text = string.Empty;
+        StartCoroutine(Writing());
+    }
+
+    public void EndDialogue()
+    {
+        started = false;
+        waitForNext = false;
+        StopAllCoroutines();
+        ToggleDialoguePanel(false);
+        ToggleIndicator(false);
+    }
+
+    IEnumerator Writing()
+    {
+        yield return new WaitForSeconds(writingSpeed);
+
+        string currentDialogue = dialogues[index];
+        dialogueText.text += currentDialogue[charIndex];
+        charIndex++;
+        if(charIndex < currentDialogue.Length)
         {
-            currentLine = unlockedDialogue[index];
-        }
-        else if (usingBranch)
-        {
-            if (isChoice2)
-            {
-                currentLine = choice2Dialogue[index];
-            }
-            else
-            {
-                currentLine = choice1Dialogue[index];
-            }
+            yield return new WaitForSeconds(writingSpeed);
+            StartCoroutine(Writing());
         }
         else
         {
-            currentLine = dialogue[index];
-        }
-
-        foreach (char letter in currentLine.ToCharArray())
-        {
-            dialogueText.text += letter;
-            yield return new WaitForSeconds(wordSpeed);
-        }
-
-        if (!usingBranch && !hasSpokenToNPC2 && index == choiceTrigger)
-        {
-            ShowChoices();
-        }
-        else 
-        {
-            contButton.SetActive(true);
+            waitForNext = true;
         }
     }
 
-    public void NextLine()
+    private void Update()
     {
-        contButton.SetActive(false);
+        if (!started)
+            return;
 
-        int maxIndex = usingBranch ? choice1Dialogue.Length - 1 : dialogue.Length - 1;
-
-        if (index < maxIndex)
+        if (waitForNext && Input.GetKeyDown(KeyCode.E))
         {
+            waitForNext = false;
             index++;
-            dialogueText.text = "";
-            StartCoroutine(Typing());
-        }
-        else
-        {
-            if (dialogueStage < 2)
+            
+            if(index < dialogues.Count)
             {
-                dialogueStage++;
+                GetDialogue(index);
             }
-            zeroText();
-        }
-    }
-
-    void ShowChoices()
-    {
-        if (Choice1 != null) Choice1.SetActive(true);
-        if (Choice2 != null) Choice2.SetActive(true);
-    }
-
-    void HideChoices()
-    {
-        if (Choice1 != null) Choice1.SetActive(false);
-        if (Choice2 != null) Choice2.SetActive(false);
-    }
-
-    public void PickChoice1()
-    {
-        HideChoices();
-        usingBranch = true;
-        isChoice2 = false;
-        index = 0;
-        dialogueText.text = "";
-        StartCoroutine(Typing());
-    }
-
-    public void PickChoice2()
-    {
-        HideChoices();
-        usingBranch = true;
-        isChoice2 = true;
-        index = 0;
-        dialogueText.text = "";
-        StartCoroutine(Typing());
-    }
-
-    public void StartConversation()
-    {
-        HideChoices();
-        index = 0;
-        dialogueText.text = "";
-
-        if (hasSpokenToNPC2)
-        {
-            dialogueStage = 1;
-        }
-
-        usingBranch = false;
-
-        if (dialogueStage == 0)
-        {
-            StartCoroutine(Typing());
-        }
-        else if (dialogueStage == 1)
-        {
-            StartCoroutine(Typing());
-        }
-        else if (dialogueStage == 2)
-        {
-            StartCoroutine(Typing());
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerIsClose = true;
-            if (triggerCanvas != null)
+            else
             {
-                triggerCanvas.SetActive(true);
-            }
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            playerIsClose = false;
-            zeroText();
-            if (triggerCanvas != null)
-            {
-                triggerCanvas.SetActive(false);
+                EndDialogue();
+                ToggleIndicator(true);
             }
         }
     }
