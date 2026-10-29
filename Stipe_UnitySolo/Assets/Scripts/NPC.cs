@@ -80,7 +80,9 @@ public class NPC : MonoBehaviour
     private void Update()
     {
         if (!started)
+        {
             return;
+        }
 
         if (waitForNext && Input.GetKeyDown(KeyCode.E))
         {

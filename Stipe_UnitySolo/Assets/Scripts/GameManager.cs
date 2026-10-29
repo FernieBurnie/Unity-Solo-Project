@@ -16,7 +16,8 @@ public class GameManager : MonoBehaviour
 
     public GameObject pauseMenu;
     public GameObject Door;
-    public bool doorOpen = false;
+    public bool openDoor = false;
+
     public bool paused = false;
 
     public int collectablesCount = 0;
@@ -31,7 +32,6 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         speaker = GetComponent<AudioSource>();
-
         Time.timeScale = 1;
 
         if (SceneManager.GetActiveScene().buildIndex != 0)
@@ -90,8 +90,7 @@ public class GameManager : MonoBehaviour
 
         if (collectablesCount == 4)
         {
-            doorOpen = true;
-            Destroy(Door);
+            openDoor = true;
         }
     }
 
@@ -105,6 +104,14 @@ public class GameManager : MonoBehaviour
         else
         {
             Destroy(gameObject);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(openDoor == true)
+        {
+            GameObject.FindGameObjectWithTag("Player").SetActive(false);
         }
     }
 

@@ -14,8 +14,8 @@ TagManager:
   - LevelEnd
   - Collectable
   - OutOfBounds
-  - LevelReturn
   - SpawnPoint
+  - Door
   layers:
   - Default
   - TransparentFX
