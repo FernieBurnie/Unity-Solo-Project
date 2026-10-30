@@ -185,20 +185,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
-    }
-
     public void Move(InputAction.CallbackContext context)
     {
         moveInput.x = context.ReadValue<Vector2>().x;
@@ -276,7 +262,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Collectable"))
         {
             Destroy(collision.gameObject);
-            gm.collectablesCount++;
+            GameManager.instance.AddCollectable(1);
         }
     }
 
@@ -330,7 +316,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "LevelEnd")
         {
-            GameObject.Find("GameManager").GetComponent<GameManager>().LoadNextScene();
+            GameManager.instance.LoadNextScene();
         }
 
         if (collision.gameObject.tag == "OutOfBounds")
@@ -341,8 +327,7 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.tag == "Collectable")
         {
             Destroy(collision.gameObject);
-
-            gm.collectablesCount++;
+            GameManager.instance.collectablesCount++;
         }
     }
 

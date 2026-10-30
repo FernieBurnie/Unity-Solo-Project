@@ -16,11 +16,11 @@ public class GameManager : MonoBehaviour
 
     public GameObject pauseMenu;
     public GameObject Door;
-    public bool openDoor = false;
 
     public bool paused = false;
 
     public int collectablesCount = 0;
+    public int collectablesRequired = 5;
 
     public TextMeshProUGUI BoostActivationText;
     public TextMeshProUGUI counter;
@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     {
         speaker = GetComponent<AudioSource>();
         Time.timeScale = 1;
+        collectablesCount = 0;
 
         if (SceneManager.GetActiveScene().buildIndex != 0)
         {
@@ -42,8 +43,6 @@ public class GameManager : MonoBehaviour
 
             healthBar = GameObject.Find("Health").GetComponent<Image>();
             staminaBar = GameObject.Find("Stamina").GetComponent<Image>();
-
-            pauseMenu = GameObject.FindGameObjectWithTag("Pause");
 
             if (pauseMenu != null)
             {
@@ -58,39 +57,30 @@ public class GameManager : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().buildIndex > 0)
         {
-            if (paused)
+            if (healthBar != null && player != null)
             {
-                Time.timeScale = 0;
-                pauseMenu.SetActive(true);
-            }
-            else 
-            {
-                Time.timeScale = 1;
-                pauseMenu.SetActive(false);
+                healthBar.fillAmount = (float)player.health / (float)player.maxHealth;
             }
 
-            healthBar.fillAmount = (float)player.health / (float)player.maxHealth;
-
-            staminaBar.fillAmount = (float)player.stamina / (float)player.maxStamina;
-
-            if (player.currentEquipment)
+            if (staminaBar != null && player != null)
             {
-                BoostActivationText.text = "Jump Boost Activated";
+                staminaBar.fillAmount = (float)player.stamina / (float)player.maxStamina;
             }
-            else
-                BoostActivationText.text = "";
 
-            counter.text = ": " + collectablesCount.ToString();
-        }
+            if (BoostActivationText != null && player != null)
+            {
+                if (player.currentEquipment)
+                {
+                    BoostActivationText.text = "Jump Boost Activated";
+                }
+                else
+                    BoostActivationText.text = "";
+            }
 
-        if (gm != null)
-        {
-            counter.text = "Collectables: " + gm.collectablesCount;
-        }
-
-        if (collectablesCount == 4)
-        {
-            openDoor = true;
+            if (counter != null)
+            {
+                counter.text = ":" + collectablesCount.ToString();
+            }
         }
     }
 
@@ -99,19 +89,10 @@ public class GameManager : MonoBehaviour
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
             Destroy(gameObject);
-        }
-    }
-
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(openDoor == true)
-        {
-            GameObject.FindGameObjectWithTag("Player").SetActive(false);
         }
     }
 
@@ -128,6 +109,7 @@ public class GameManager : MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         Time.timeScale = 1;
+        paused = false;
 
         if (scene.buildIndex > 0)
         {
@@ -140,6 +122,11 @@ public class GameManager : MonoBehaviour
                 {
                     player.transform.position = spawnPoint.transform.position;
                 }
+            }
+
+            if (pauseMenu != null)
+            {
+                pauseMenu.SetActive(false);
             }
 
             if (GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>())
@@ -164,25 +151,32 @@ public class GameManager : MonoBehaviour
     public void Pause()
     {
         paused = !paused;
-        
+
         if (paused)
         {
-            Time.timeScale = 0;
+            Time.timeScale = 0f;
         }
         else
         {
-            Time.timeScale = 1;
+            Time.timeScale = 1f;
         }
 
-        pauseMenu.SetActive(paused);
+        if (pauseMenu != null)
+        {
+            pauseMenu.SetActive(paused);
+        }
     }
 
     public void LoadLevel(int levelID)
     {
         if (levelID >= SceneManager.sceneCountInBuildSettings)
+        {
             Debug.Log("Scene ID too high: " + levelID);
+        }
         else
+        {
             SceneManager.LoadScene(levelID);
+        }
     }
 
     public void LoadNextScene()
@@ -193,7 +187,21 @@ public class GameManager : MonoBehaviour
     public void AddCollectable(int amount)
     {
         collectablesCount += amount;
+
         Debug.Log("Total Collectables: " + collectablesCount);
+
+        CheckCollectables();
+    }
+
+    public void CheckCollectables()
+    {
+        if (collectablesCount >= collectablesRequired)
+        {
+            if (Door != null)
+            {
+                Door.SetActive(false);
+            }
+        }
     }
 
     public void MainMenu()
