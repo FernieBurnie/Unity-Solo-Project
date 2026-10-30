@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject pauseMenu;
     public GameObject Door;
+    public GameObject doorDialogue;
 
     public bool paused = false;
 
@@ -201,6 +202,8 @@ public class GameManager : MonoBehaviour
             {
                 Door.SetActive(false);
             }
+
+            doorDialogue.SetActive(true);
         }
     }
 

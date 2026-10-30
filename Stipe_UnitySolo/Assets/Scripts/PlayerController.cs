@@ -326,6 +326,8 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "Collectable")
         {
+            speaker.Play();
+
             Destroy(collision.gameObject);
             GameManager.instance.collectablesCount++;
         }
